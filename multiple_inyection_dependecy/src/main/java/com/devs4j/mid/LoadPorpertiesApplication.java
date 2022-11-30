@@ -9,12 +9,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 import com.devs4j.mid.autowired.AreaTraslateService;
 
 @SpringBootApplication
-public class MultipleInyectionDependecyApplication {
+public class LoadPorpertiesApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(MultipleInyectionDependecyApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(LoadPorpertiesApplication.class);
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(MultipleInyectionDependecyApplication.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(LoadPorpertiesApplication.class, args);
 		
 		AreaTraslateService calculator = context.getBean(AreaTraslateService.class);
 		log.info("Area total {} "+calculator.calcAreas());
