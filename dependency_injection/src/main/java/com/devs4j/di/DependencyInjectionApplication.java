@@ -54,6 +54,11 @@ public class DependencyInjectionApplication {
 		//Uso de Qualifiers dentro de una clase
 		Nido nido = context.getBean(Nido.class);
 		nido.msg();
+		
+		//Sobrecarga del método "getBean(nombre_qualifier,class);
+		//no da error, si se define el objeto primary
+		Animal animal3 = context.getBean(Animal.class);
+		log.info(animal.toString());
 	}
 
 }
