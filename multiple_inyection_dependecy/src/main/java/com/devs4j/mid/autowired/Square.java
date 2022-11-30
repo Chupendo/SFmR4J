@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Square implements Figure {
 
-	@Value("2.5")
+	//@Value("2.5")
+	@Value("${square.side:1}")
 	private double radius;
 	
 	@Override
