@@ -12,6 +12,7 @@ public class BeanExcplitApplication {
 	
 	private static final Logger log = LoggerFactory.getLogger(BeanExcplitApplication.class);
 
+	//Ejemplo de definicon de un bien expliciot
 	@Bean
 	public static String getNombreApp() {
 		return "BeanExcplitApplication";
