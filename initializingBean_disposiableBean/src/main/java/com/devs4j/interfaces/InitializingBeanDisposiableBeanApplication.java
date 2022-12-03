@@ -11,7 +11,9 @@ public class InitializingBeanDisposiableBeanApplication {
 
 	public static void main(String[] args) {
 		 ConfigurableApplicationContext context =  
-				 SpringApplication.run(InitializingBeanDisposiableBeanApplication.class, args);
+				 SpringApplication.run(
+						 InitializingBeanDisposiableBeanApplication.class
+						 , args);
 		 //context.getBean(LifeCycleBean.class);
 		 context.close();
 	}

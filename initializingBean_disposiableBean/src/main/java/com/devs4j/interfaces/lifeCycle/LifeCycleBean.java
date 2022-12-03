@@ -12,7 +12,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
 @Component
-@Lazy(false)
+@Lazy //@Lazy(false) //Lo pongo como lazy para probar segundo ejemplo
 public class LifeCycleBean implements BeanNameAware, 
 	InitializingBean, DisposableBean {
 
