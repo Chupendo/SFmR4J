@@ -10,8 +10,8 @@ import jakarta.annotation.PostConstruct;
 @Component @Lazy
 public class BeanA {
 	private static final Logger log = LoggerFactory.getLogger(BeanA.class);
-	@Autowired
-	private BeanB bean;
+	//@Autowired
+	//private BeanB bean; //Bean Eager
 	@PostConstruct
 	public void init() {
 		log.info("Init Bean A");
