@@ -25,16 +25,18 @@ BeanNameAware, BeanPostProcessor {
 	@Override
 	public Object postProcessBeforeInitialization(Object bean,
 			String beanName) throws BeansException {
-		log.info("Bean initialization {} "+beanName);
+		if(beanName.equals("lifeCycleBean"))
+			log.info("Bean initialization {} "+beanName);
+		
 		return bean;
 	}
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, 
 			String beanName) throws BeansException {
-		log.info("After initialization {} "+beanName);
+		if(beanName.equals("lifeCycleBean"))
+				log.info("After initialization {} "+beanName);
 		return bean;
 	}
 
-	
 }
