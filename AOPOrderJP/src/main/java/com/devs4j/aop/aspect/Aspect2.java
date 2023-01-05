@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-@Order(1)
+@Order(2)
 public class Aspect2 {
 	private static final Logger log = LoggerFactory.getLogger(Aspect2.class);
-	@Before("execution(* com.devs4j.aop.service.Operation.*(..))")
-	public void advice(JoinPoint jpt) {
+	@Before("com.devs4j.aop.pointcut.OperationPointCUt.advice()")
+	public void adviceAsp2(JoinPoint jpt) {
 		log.info("before advice Aspect2 {} ",jpt.getSignature().getName());
 	}
 }
