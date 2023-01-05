@@ -15,6 +15,7 @@ public class AopOrderJpApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(AopOrderJpApplication.class, args);
 		Operation op = context.getBean(Operation.class);
 		log.info("main() {}",op.sum(3,2));
+		log.info("main() {}",op.subtrac(3,2));
 		context.close();
 	}
 }
