@@ -2,6 +2,7 @@ package com.devs4j.aop.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,11 @@ public class UserService {
 		}
 	}
 
+	/*
 	public List<User> getUsers() {
 		return lusers;
 	}
+	*/
 
 	public User getUserByName(String userName) {
 		return lusers.stream().filter(u -> u.getUsername().equals(userName)).findAny()
@@ -68,5 +71,14 @@ public class UserService {
 	public void deleteUser(String username) {
 		User userTobeDelted = getUserByName(username);
 		lusers.remove(userTobeDelted);
+	}
+	
+	public List<User> getUsers(String startWith) {
+		System.out.println(startWith);
+		if(startWith!=null) {
+			return lusers.stream().filter(u->u.getUsername().startsWith(startWith))
+			.collect(Collectors.toList());	
+		}
+		return lusers;
 	}
 }

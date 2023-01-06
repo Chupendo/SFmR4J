@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devs4j.aop.models.User;
@@ -23,10 +24,12 @@ class UserController {
 	@Autowired
 	private UserService userService;
 	
+	/*
 	@GetMapping
 	public ResponseEntity<List<User>> getUsers(){
 		return new ResponseEntity<List<User>>(userService.getUsers(),HttpStatus.OK);
 	}
+	*/
 	
 	@GetMapping(value = "/{username}")
 	public ResponseEntity<User> getUserByUserName(@PathVariable("username") String userName){
@@ -47,5 +50,10 @@ class UserController {
 	public ResponseEntity<Void> deleteUser(@PathVariable("username") String userName){
 		userService.deleteUser(userName);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<User>> getUserStarWith(@RequestParam(value = "startWith", required = false) String startWith){
+		return new ResponseEntity<List<User>>(userService.getUsers(startWith),HttpStatus.OK);
 	}
 }
