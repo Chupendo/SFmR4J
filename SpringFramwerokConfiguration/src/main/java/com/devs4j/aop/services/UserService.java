@@ -55,4 +55,18 @@ public class UserService {
 		lusers.add(user);
 		return user;
 	}
+	
+	public User upDateUser(User user, String username) {
+		//Get instance of user to be updated if exists
+		User userTobeUpdated = getUserByName(username);
+		userTobeUpdated.setNickName(user.getNickName());
+		userTobeUpdated.setPassword(user.getPassword());
+		
+		return userTobeUpdated;
+	}
+	
+	public void deleteUser(String username) {
+		User userTobeDelted = getUserByName(username);
+		lusers.remove(userTobeDelted);
+	}
 }
