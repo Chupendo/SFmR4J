@@ -15,7 +15,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name="rofile")
+@Table(name="profile")
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = {"first_name","first_name","birth_date"})

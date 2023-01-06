@@ -1,9 +1,6 @@
-package com.devs4j.jpa.controllers;
+package com.devs4j.jpa.entites;
 
 import java.util.Objects;
-
-import com.devs4j.jpa.entites.Role;
-import com.devs4j.jpa.entites.User;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
@@ -36,6 +33,7 @@ public class UserInRole {
 	
 	@JoinColumn(name = "role_id")
 	Role role;
+	
 	public UserInRole(Integer id, User user, Role role) {
 		super();
 		this.id = id;
