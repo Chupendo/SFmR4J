@@ -11,11 +11,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name="user")
 @Data
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"username","password"})
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,7 +100,4 @@ public class User {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
 }
