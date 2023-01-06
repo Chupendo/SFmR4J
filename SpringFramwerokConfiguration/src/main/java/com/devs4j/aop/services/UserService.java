@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.devs4j.aop.models.User;
 import com.github.javafaker.Faker;
@@ -31,5 +33,14 @@ public class UserService {
 	
 	public List<User> getUsers(){
 		return lusers;
+	}
+	
+	public User getUserByName(String userName) {
+		return lusers.stream()
+		.filter(u->u.getUsername().equals(userName))
+		.findAny()
+		.orElseThrow(()->
+			new ResponseStatusException(HttpStatus.BAD_REQUEST, 
+					String.format("User %s not found", userName)));
 	}
 }
