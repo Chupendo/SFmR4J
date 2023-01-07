@@ -67,4 +67,10 @@ public class UserController {
 	public ResponseEntity<Page<User>> getUserPaginable(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam(required = false, value = "startWith") String startWith) {
 		return new ResponseEntity<Page<User>>(userService.paginableUser(page,size,startWith), HttpStatus.OK);
 	}
+	
+	@GetMapping("/usernames")
+	public ResponseEntity<List<String>> getAllUserNames() {
+
+		return new ResponseEntity<List<String>>(userService.getAllUserNames(), HttpStatus.OK);
+	}
 }

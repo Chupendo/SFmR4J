@@ -71,9 +71,7 @@ public class UserService {
 	}
 	
 	public Page<User> paginableUser(Integer page, Integer size, String startWith){
-		System.out.println("page: "+page+", size= "+size);
 		Page<User> luser = repository.findAll(PageRequest.of(page, size));
-		System.out.println(luser.getSize());
 		if(startWith==null) {
 			return luser;
 		}
@@ -90,6 +88,10 @@ public class UserService {
 							u->u.getUserName()
 								.startsWith(startWith))
 								.collect(Collectors.toList()));
+	}
+	
+	public List<String> getAllUserNames(){
+		return repository.findAllUserNames();
 	}
 
 }
