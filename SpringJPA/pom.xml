@@ -49,11 +49,17 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--  https://github.com/DiUS/java-faker  -->
+		<!-- https://github.com/DiUS/java-faker -->
 		<dependency>
 			<groupId>com.github.javafaker</groupId>
 			<artifactId>javafaker</artifactId>
 			<version>1.0.2</version>
+		</dependency>
+
+		<!-- actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 	</dependencies>
 
