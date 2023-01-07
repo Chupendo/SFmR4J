@@ -61,5 +61,10 @@ public class UserService {
 		
 		repository.delete(userToBeDeleted);
 	}
+	
+	public User authenticateUser(User user) {
+		return repository.findUserByUserNameAndPassword(user.getUserName(), user.getPassword()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, 
+					String.format("The %s cannot be authentication",user.getUserName())));
+	}
 
 }

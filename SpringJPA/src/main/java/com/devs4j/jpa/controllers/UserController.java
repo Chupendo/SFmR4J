@@ -53,5 +53,10 @@ public class UserController {
 		userService.deleteUserByName(userName);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	
+	@PostMapping("/auth")
+	public ResponseEntity<User> authenticate(@RequestBody User user){
+		
+		return new ResponseEntity<User>(userService.authenticateUser(user),HttpStatus.CREATED);
+	}
 }

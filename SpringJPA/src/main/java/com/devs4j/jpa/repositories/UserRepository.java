@@ -11,4 +11,6 @@ import com.devs4j.jpa.entites.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	public Optional<User> findUserByUserName(String username);
+	
+	public Optional<User> findUserByUserNameAndPassword(String user,String pwd);
 }
