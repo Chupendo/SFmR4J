@@ -93,5 +93,9 @@ public class UserService {
 	public List<String> getAllUserNames(){
 		return repository.findAllUserNames();
 	}
+	
+	public Page<String> getAllUserNamesPage(Integer page,Integer size){
+		return repository.findAllUserNamesPage(PageRequest.of(page, size));
+	}
 
 }
