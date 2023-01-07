@@ -75,11 +75,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/usernames-page")
-	public ResponseEntity<List<String>> getAllUserNamesPage(
+	public ResponseEntity<Page<String>> getAllUserNamesPage(
 			@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
 			@RequestParam(required = false, value = "size", defaultValue = "10") Integer size) {
 		
 
-		return new ResponseEntity<List<String>>(userService.getAllUserNames(), HttpStatus.OK);
+		return new ResponseEntity<Page<String>>(userService.getAllUserNamesPage(page,size), HttpStatus.OK);
 	}
 }
