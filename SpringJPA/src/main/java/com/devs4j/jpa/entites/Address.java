@@ -33,6 +33,9 @@ public class Address {
 	@NonNull private String city;
 	@ManyToOne
 	@NonNull private Profile profile;
+	
+	public Address() {}
+	
 	public Address(Integer id, String street, String number, String city, Profile profile) {
 		super();
 		this.id = id;

@@ -8,4 +8,5 @@ import com.devs4j.jpa.entites.Role;
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Integer> {
 
+	public Role findByName(String name);
 }

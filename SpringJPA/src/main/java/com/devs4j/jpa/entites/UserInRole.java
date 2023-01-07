@@ -35,6 +35,7 @@ public class UserInRole {
 	@JoinColumn(name = "role_id")
 	Role role;
 	
+	public UserInRole() {}
 	public UserInRole(Integer id, User user, Role role) {
 		super();
 		this.id = id;

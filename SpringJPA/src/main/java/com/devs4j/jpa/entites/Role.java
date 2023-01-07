@@ -26,9 +26,14 @@ public class Role {
 	@NonNull public Integer id;
 	@Column(name="name")
 	@NonNull public String name;
+	public Role() {}
+	
+	public Role(String name) {
+		this.id=0;
+		this.name = name;
+	}
 	
 	public Role(Integer id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
 	}

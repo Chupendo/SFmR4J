@@ -30,6 +30,7 @@ public class User {
 	@Column(name="password")
 	private String password;
 
+	public User() {}
 	public User(Long id, String username, String password) {
 		super();
 		this.id = id;

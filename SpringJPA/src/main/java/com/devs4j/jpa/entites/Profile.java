@@ -34,6 +34,8 @@ public class Profile {
 	@Column(name="birth_date")
 	private Date birthDate;
 
+	public Profile() {} 
+	
 	public Profile(Integer id, String fisrtName, String lastName, Date birthDate) {
 		super();
 		this.id = id;
