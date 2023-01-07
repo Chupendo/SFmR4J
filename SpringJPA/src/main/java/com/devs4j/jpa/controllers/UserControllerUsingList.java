@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devs4j.jpa.entites.User;
-import com.devs4j.jpa.services.UserService;
+import com.devs4j.jpa.models.User;
+import com.devs4j.jpa.services.UserServiceUsingList;
 
 @RestController
-@RequestMapping("/v2/user")
-public class UserController {
+@RequestMapping("/v1/user")
+public class UserControllerUsingList {
 
 	@Autowired
-	UserService userService;
+	UserServiceUsingList userService;
 	
 	@GetMapping
 	public ResponseEntity<List<User>> getUser(@RequestParam(required = false,value = "startWith") String startWith){

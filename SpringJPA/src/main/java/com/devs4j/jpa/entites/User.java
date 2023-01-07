@@ -8,34 +8,58 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="user")
+@Table(name="client")
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = {"username","password"})
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private Long id;
+	private Long id = 0L;
 	
-	@Column(name="username")
-	private String username;
+	@Column(name="user_name")
+	private String userName;
+	
+	@Column(name="nick")
+	private String userNick;
 	
 	@Column(name="password")
 	private String password;
 
+	@ManyToOne
+	@JoinColumn(name = "role_id")
+	private Role role;
+	
 	public User() {}
-	public User(Long id, String username, String password) {
+
+	public User(Long id, String userName, String userNick, String password, Role role) {
 		super();
 		this.id = id;
-		this.username = username;
+		this.userName = userName;
+		this.userNick = userNick;
 		this.password = password;
+		this.role = role;
+	}
+	
+	
+
+	public User(String userName, String userNick, String password, Role role) {
+		super();
+		this.userName = userName;
+		this.userNick = userNick;
+		this.password = password;
+		this.role = role;
 	}
 
 	/**
@@ -53,17 +77,31 @@ public class User {
 	}
 
 	/**
-	 * @return the username
+	 * @return the userName
 	 */
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param userName the userName to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * @return the userNick
+	 */
+	public String getUserNick() {
+		return userNick;
+	}
+
+	/**
+	 * @param userNick the userNick to set
+	 */
+	public void setUserNick(String userNick) {
+		this.userNick = userNick;
 	}
 
 	/**
@@ -80,9 +118,24 @@ public class User {
 		this.password = password;
 	}
 
+	/**
+	 * @return the role
+	 */
+	public Role getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
+		return "User [id=" + id + ", userName=" + userName + ", userNick=" + userNick + ", password=" + password
+				+ ", role=" + role + "]";
 	}
 
 	@Override
@@ -101,4 +154,7 @@ public class User {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
+
 }
