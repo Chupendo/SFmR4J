@@ -20,7 +20,7 @@ public class UserRun implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		System.out.println("entro");
-		for(int i=0;i<50;i++) {
+		for(int i=0;i<10000;i++) {
 			User aux = new User();
 			aux.setUserName(faker.name().username());
 			aux.setUserNick(faker.funnyName().name());

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -65,6 +68,28 @@ public class UserService {
 	public User authenticateUser(User user) {
 		return repository.findUserByUserNameAndPassword(user.getUserName(), user.getPassword()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, 
 					String.format("The %s cannot be authentication",user.getUserName())));
+	}
+	
+	public Page<User> paginableUser(Integer page, Integer size, String startWith){
+		System.out.println("page: "+page+", size= "+size);
+		Page<User> luser = repository.findAll(PageRequest.of(page, size));
+		System.out.println(luser.getSize());
+		if(startWith==null) {
+			return luser;
+		}
+		
+		/*
+		 * convert to List<User> to page<User>
+		 *  List<User> users = userService.findAllByProgramId(programId);
+    	 *  Page<User> pages = new PageImpl<User>(users, pageable, users.size());
+		 */
+		
+		return new PageImpl<User>( 
+				luser.stream()
+					.filter(
+							u->u.getUserName()
+								.startsWith(startWith))
+								.collect(Collectors.toList()));
 	}
 
 }
