@@ -5,3 +5,4 @@ SwaggerAPI/mvnw
 *.jar
 SwaggerAPI/.mvn/wrapper/maven-wrapper.jar
 SwaggerAPI/.mvn/wrapper/maven-wrapper.jar
+*.jar
