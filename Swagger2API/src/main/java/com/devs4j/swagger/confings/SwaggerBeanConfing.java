@@ -22,8 +22,11 @@ public class SwaggerBeanConfing {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(getApiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.any())              
-		        .paths(PathSelectors.any()).build();
+				//.apis(RequestHandlerSelectors.any())
+				.apis(RequestHandlerSelectors.basePackage("com.devs4j.swagger.controller"))
+		        //.paths(PathSelectors.any())
+		        .paths(PathSelectors.ant("/hello/*"))
+		        .build();
 	}
 	
 	private ApiInfo getApiInfo() {
