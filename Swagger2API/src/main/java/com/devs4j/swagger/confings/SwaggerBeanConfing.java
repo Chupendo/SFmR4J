@@ -20,6 +20,7 @@ public class SwaggerBeanConfing {
 	@Bean
 	public Docket getDocket() {
 		return new Docket(DocumentationType.SWAGGER_2)
+				.useDefaultResponseMessages(false)
 				.apiInfo(getApiInfo())
 				.select()
 				.apis(RequestHandlerSelectors.any())
