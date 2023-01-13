@@ -3,7 +3,10 @@ package com.devs4j.caching.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +24,9 @@ public class UserService {
 	@Autowired
 	IUserRepository uRepo;
 	
+	
+	private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
 	
 	public List<User> getUsers(String startWith){
 		List<User> lUser = uRepo.findAll();
@@ -53,8 +59,15 @@ public class UserService {
 		
 	}
 	
+	@Cacheable("user")
 	public User getUserByName(String name) {
-		return uRepo.findByName(name).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Name user %s not found",name)));
+		log.info("Getting user by name {}",name);
+		return uRepo
+				.findByName(name)
+				.orElseThrow(()-> new ResponseStatusException(
+						HttpStatus.NOT_FOUND,
+						String.format("Name user %s not found",name)
+						));
 	}
 	
 	public User createUser(User user) {
