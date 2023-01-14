@@ -83,4 +83,5 @@ public class UserController {
 
 		return new ResponseEntity<Page<String>>(uSer.getAllUserNamesPage(page,size), HttpStatus.OK);
 	}
+	
 }

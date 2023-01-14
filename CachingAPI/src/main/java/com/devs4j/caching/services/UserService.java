@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -59,7 +61,8 @@ public class UserService {
 		
 	}
 	
-	@Cacheable("user")
+	//@Cacheable(value="user")
+	@Cacheable(value="user", key = "#name")//Guarda el resultado en el mapa user con la key "name"
 	public User getUserByName(String name) {
 		log.info("Getting user by name {}",name);
 		return uRepo
@@ -81,17 +84,25 @@ public class UserService {
 		return user;
 		
 	}
-	public void updateUser(String name, User user) {
-		if(!nameIsBeingUsed(user.getName()))
+	
+
+	@CachePut(value="user", key="#name")//Guarda el resultado en el mapa user con la key 
+	public User updateUser(String name, User user) {
+		if(!nameIsBeingUsed(name))
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT, String.format("The user %s not found" , name));
+		
+		if(!nameIsBeingUsed(user.getName()))
+			throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("The user %s is being used" , name));
 		
 		User userToBeUpdate = uRepo.findByName(name).orElseThrow(()->new ResponseStatusException(HttpStatus.NO_CONTENT, String.format("The user %s not found" , name)));
 		userToBeUpdate.setName(user.getName());
-		userToBeUpdate.setId(user.getId());
+		//userToBeUpdate.setId(user.getId());
 		userToBeUpdate.setNick(user.getNick());
 		userToBeUpdate.setPassword(user.getPassword());
 		
 		uRepo.save(userToBeUpdate);
+		
+		return userToBeUpdate;
 		
 	}
 	private boolean idIsBeingUsed(Integer id) {
@@ -117,9 +128,13 @@ public class UserService {
 		
 	}
 	
+	//@CacheEvict("user")
+	@CacheEvict(value="user", key="#name")
 	public void deleteUserByName(String name) {
 		if(!nameIsBeingUsed(name))
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("The user %s not found" , name));
+			throw new ResponseStatusException(
+					HttpStatus.BAD_REQUEST, 
+					String.format("The user %s not found" , name));
 		
 		uRepo.deleteById(getUserByName(name).getId());
 	}
