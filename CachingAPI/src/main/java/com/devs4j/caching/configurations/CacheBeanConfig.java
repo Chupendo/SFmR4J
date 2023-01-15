@@ -1,49 +1,55 @@
 package com.devs4j.caching.configurations;
 
-import org.redisson.Redisson;
-import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
-import org.redisson.spring.cache.CacheConfig;
-import org.redisson.spring.cache.RedissonSpringCacheManager;
 
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 
-import javax.cache.CacheManager;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+
 
 @Configuration
 @EnableCaching
 public class CacheBeanConfig {
 
-	/*
+
 	//Cache admin local
 
+	/*
 	@Bean
 	public CacheManager getManager() {
 		return new ConcurrentMapCacheManager("user","roles","address");
-	}
+	}*/
 
-	*/
-	//Cache admin redis
+	// Caching admin with Redis
 	@Bean
-	public CacheManager  getManager(RedissonClient redissonClient){
-		Map<String, CacheConfig> config = new HashMap<>();
-		config.put("users",new CacheConfig(24*60*1000, 12*60*1000));
-		return (CacheManager) new RedissonSpringCacheManager(redissonClient,config);
-	}
-	@Bean(destroyMethod = "shutdown")
-	public RedissonClient redisson(){
-		Config config = new Config();
-		config.useSingleServer()
-				//.setAddress("redis://127.0.0.1:6379");
-				.setAddress("redis://172.28.224.1:6379");
-				//.setAddress("redis://192.168.56.1:6379");
+	public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory){
+		Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
+		redisCacheConfigurationMap.put("users", createConfing(3600, ChronoUnit.MINUTES));
 
-		return Redisson.create(config);
+		return RedisCacheManager
+				.builder(redisConnectionFactory)
+				.withInitialCacheConfigurations(redisCacheConfigurationMap)
+				.build();
 	}
 
+	public static RedisCacheConfiguration createConfing(long time, ChronoUnit temporalUnit){
+		return RedisCacheConfiguration.defaultCacheConfig()
+				.disableCachingNullValues()
+				.entryTtl(Duration.of(time,temporalUnit))
+				.serializeValuesWith(RedisSerializationContext
+						.SerializationPair
+						.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
+	}
 }

@@ -1,6 +1,7 @@
 package com.devs4j.caching.configurations;
 
 
+import com.devs4j.caching.entitites.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import com.devs4j.caching.entitites.User;
 import com.devs4j.caching.reports.IUserRepository;
 import com.github.javafaker.Faker;
 

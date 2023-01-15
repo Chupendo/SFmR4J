@@ -3,6 +3,7 @@ package com.devs4j.caching.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.devs4j.caching.entitites.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.devs4j.caching.entitites.User;
 import com.devs4j.caching.reports.IUserRepository;
 
 @Service
@@ -31,19 +31,19 @@ public class UserService {
 
 	
 	public List<User> getUsers(String startWith){
-		List<User> lUser = uRepo.findAll();
-		if(lUser==null||lUser.isEmpty())
+		List<User> lUsers = uRepo.findAll();
+		if(lUsers ==null|| lUsers.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"There aren't users load in the system");
 			
 		if(startWith==null) {
-			return lUser;
+			return lUsers;
 		}
 		
-		return lUser.stream().filter(u->u.getName().startsWith(startWith)).toList();
+		return lUsers.stream().filter(u->u.getName().startsWith(startWith)).toList();
 		
 	}
 	
-	public Page<User> getUsersPage(Integer page,Integer size, String startWith){
+	public Page<User> getUsersPage(Integer page, Integer size, String startWith){
 		Page<User> allUserSortedByNameAndId = uRepo.findAll(PageRequest.of(page, size,Sort.by("name").and(Sort.by("id"))));
 		if(startWith==null) {
 			return allUserSortedByNameAndId;
@@ -62,7 +62,8 @@ public class UserService {
 	}
 	
 	//@Cacheable(value="user")
-	@Cacheable(value="user", key = "#name")//Guarda el resultado en el mapa user con la key "name"
+	//@Cacheable(value="user", key = "#name", unless = "#result == null")//Guarda el resultado en el mapa user con la key "name"
+	@Cacheable(value= "users")//Guarda el resultado en el mapa user con la key "name"
 	public User getUserByName(String name) {
 		log.info("Getting user by name {}",name);
 		return uRepo
@@ -75,10 +76,10 @@ public class UserService {
 	
 	public User createUser(User user) {
 		if(user.getId()!=0 && idIsBeingUsed(user.getId()))
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Name user %s not found",user.getId()));
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Name user %s not found", user.getId()));
 		
 		if(user.getName()==null || user.getName().isEmpty() || nameIsBeingUsed(user.getName()))
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Name user %s not found",user.getId()));
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("Name user %s not found", user.getId()));
 		
 		uRepo.save(user);
 		return user;
@@ -86,7 +87,7 @@ public class UserService {
 	}
 	
 
-	@CachePut(value="user", key="#name")//Guarda el resultado en el mapa user con la key 
+	@CachePut(value= "users", key="#name")//Guarda el resultado en el mapa user con la key
 	public User updateUser(String name, User user) {
 		if(!nameIsBeingUsed(name))
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT, String.format("The user %s not found" , name));
@@ -115,7 +116,7 @@ public class UserService {
 	
 	public User authenticateUser(User user) {
 		User userToAuth = uRepo.findByName(user.getName()).get();
-		if(userToAuth==null) {
+		if(userToAuth ==null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("The user %s not found" , user.getName()));
 		}
 		
@@ -129,7 +130,7 @@ public class UserService {
 	}
 	
 	//@CacheEvict("user")
-	@CacheEvict(value="user", key="#name")
+	@CacheEvict(value= "users", key="#name")
 	public void deleteUserByName(String name) {
 		if(!nameIsBeingUsed(name))
 			throw new ResponseStatusException(

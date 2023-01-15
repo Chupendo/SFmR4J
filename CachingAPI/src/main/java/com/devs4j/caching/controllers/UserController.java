@@ -2,6 +2,7 @@ package com.devs4j.caching.controllers;
 
 import java.util.List;
 
+import com.devs4j.caching.entitites.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devs4j.caching.entitites.User;
 import com.devs4j.caching.services.UserService;
 
 @RestController

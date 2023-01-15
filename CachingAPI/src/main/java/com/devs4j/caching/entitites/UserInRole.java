@@ -1,5 +1,6 @@
 package  com.devs4j.caching.entitites;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import io.micrometer.common.lang.NonNull;
@@ -11,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,7 +19,9 @@ import lombok.EqualsAndHashCode;
 @Table(name = "user_role")
 @Data
 @EqualsAndHashCode(exclude = {"user","role"})
-public class UserInRole {
+public class UserInRole implements Serializable {
+	// AL ser estatico este atributo no va ha ser persitiod en la bbdd
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

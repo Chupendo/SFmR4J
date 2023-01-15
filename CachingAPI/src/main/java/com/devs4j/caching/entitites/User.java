@@ -17,7 +17,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "client")
 public class User implements Serializable {
+	// AL ser estatico este atributo no va ha ser persitiod en la bbdd
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private  Integer id;
@@ -36,7 +38,7 @@ public class User implements Serializable {
 		this.id=0;
 	}
 	
-	public User(String name, String nick, String password,Role role) {
+	public User(String name, String nick, String password, Role role) {
 		this.id = 0;
 		this.name = name;
 		this.nick = nick;
@@ -44,7 +46,7 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
-	public User(Integer id,String name, String nick, String password, Role role) {
+	public User(Integer id, String name, String nick, String password, Role role) {
 		this.id = id;
 		this.name = name;
 		this.nick = nick;
@@ -145,6 +147,6 @@ public class User implements Serializable {
 		return "User [id=" + id + ", name=" + name + ", nick=" + nick + ", password=" + password 
 				+ ", role=" + role + "]";
 	}
-	
-	
+
+
 }

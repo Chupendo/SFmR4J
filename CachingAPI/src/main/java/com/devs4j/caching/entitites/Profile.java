@@ -1,5 +1,6 @@
 package  com.devs4j.caching.entitites;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,7 +17,9 @@ import lombok.EqualsAndHashCode;
 @Table(name="profile")
 @Data
 @EqualsAndHashCode(exclude = {"first_name","first_name","birth_date"})
-public class Profile {
+public class Profile implements Serializable {
+	// AL ser estatico este atributo no va ha ser persitiod en la bbdd
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
