@@ -10,14 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name="address")
 @Data
-@AllArgsConstructor
 @EqualsAndHashCode(exclude = {"street","number","city","profile"})
 public class Address {
 

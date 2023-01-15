@@ -16,7 +16,6 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "role")
 @Data
-@AllArgsConstructor
 @EqualsAndHashCode(exclude = {"name"})
 public class Role {
 	

@@ -9,14 +9,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name="profile")
 @Data
-@AllArgsConstructor
 @EqualsAndHashCode(exclude = {"first_name","first_name","birth_date"})
 public class Profile {
 	@Id

@@ -1,6 +1,7 @@
 package com.devs4j.caching.entitites;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -15,8 +16,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "client")
-public class User {
-
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private  Integer id;
