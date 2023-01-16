@@ -3,6 +3,7 @@ package com.example.springsecurity.entities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Data
 @ToString
 @EqualsAndHashCode(exclude = "id")
+@RequiredArgsConstructor //create a constructor with nonnull attr  only
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
