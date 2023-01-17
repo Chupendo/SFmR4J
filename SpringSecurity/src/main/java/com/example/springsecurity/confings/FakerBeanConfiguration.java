@@ -1,9 +1,8 @@
-package com.example.springsecurity.configurations;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+package com.example.springsecurity.confings;
 
 import com.github.javafaker.Faker;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FakerBeanConfiguration {

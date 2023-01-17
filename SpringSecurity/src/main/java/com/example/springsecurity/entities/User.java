@@ -12,14 +12,14 @@ import javax.persistence.*;
 @Table(name="users")
 @Data
 @ToString
-@EqualsAndHashCode(exclude = {"id","userNick","password","role"})
+@EqualsAndHashCode(exclude = {"id","userNick","password"})
 @RequiredArgsConstructor //create a constructor with nonnull attr  only
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = 0L;
 
-    @Column(name="name")
+    @Column(name="name",nullable = false,unique = true)
     @NonNull private String userName;
 
     @Column(name="nick")
@@ -28,10 +28,6 @@ public class User {
     @Column(name="password")
     @NonNull private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
     public User(){}
 
     public User(User user){
@@ -39,6 +35,6 @@ public class User {
         this.userName=user.getUserName();
         this.userNick=user.getUserNick();
         this.password=user.getPassword();
-        this.role=user.getRole();
     }
+    
 }
