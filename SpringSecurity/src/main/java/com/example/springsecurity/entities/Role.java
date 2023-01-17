@@ -32,4 +32,5 @@ public class Role {
         this.id=role.getId();
         this.name=role.getName();
     }
+  
 }
