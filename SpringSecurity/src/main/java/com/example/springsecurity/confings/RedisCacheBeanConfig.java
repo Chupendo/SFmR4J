@@ -15,9 +15,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/*
 @Configuration
 @EnableCaching
-public class CacheBeanConfig {
+public class RedisCacheBeanConfig {
 
 
     // Caching admin with Redis
@@ -44,3 +46,4 @@ public class CacheBeanConfig {
                         .fromSerializer(new GenericJackson2JsonRedisSerializer()));
     }
 }
+*/

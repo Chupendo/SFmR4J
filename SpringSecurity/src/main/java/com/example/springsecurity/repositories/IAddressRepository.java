@@ -11,7 +11,7 @@ import com.example.springsecurity.entities.Address;
 @Repository
 public interface IAddressRepository extends JpaRepository<Address, Long>{
 
-	@Query("SELECT a WHERE Address a WHERE a.profile.user.id=?1 and a.profile.id=?2")
+	@Query("SELECT a FROM Address a WHERE a.profile.user.id=?1 and a.profile.id=?2")
 	List<Address> findByProfileIdAndUserId(Long idUser, Long idProfile);
 
 }
