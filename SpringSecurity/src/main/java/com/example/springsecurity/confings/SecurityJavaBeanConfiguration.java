@@ -36,14 +36,14 @@ public class SecurityJavaBeanConfiguration  {
         users.add(admin);
 
         List<GrantedAuthority> employeeAuthority = new ArrayList<>();
-        adminAuthority.add(new SimpleGrantedAuthority("EMPLOYEE"));
+        employeeAuthority.add(new SimpleGrantedAuthority("EMPLOYEE"));
         //UserDetails employee= new User("ns", "{noop}ns", employeeAuthority);
         UserDetails employee= new User("ns", encode().encode("vs"), adminAuthority);
         users.add(employee);
 
         List<GrantedAuthority> managerAuthority = new ArrayList<>();
-        adminAuthority.add(new SimpleGrantedAuthority("MANAGER"));
-        UserDetails manager= new User("vs", encode().encode("vs"), managerAuthority);
+        managerAuthority.add(new SimpleGrantedAuthority("MANAGER"));
+        UserDetails manager= new User("manager", encode().encode("vs"), managerAuthority);
         users.add(manager);
 
         return new InMemoryUserDetailsManager(users);
@@ -65,7 +65,7 @@ public class SecurityJavaBeanConfiguration  {
                 .antMatchers("/emp").hasAuthority("EMPLOYEE")
                 .antMatchers("/mgr").hasAuthority("MANAGER")
                 .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
-                .antMatchers("/roles/**").hasAnyAuthority("EMPLOYEE","MANAGER")
+                .antMatchers("/roles/**").hasAnyAuthority("MANAGER")
 
                 //Habilitamos peitonces/respusta de h2-consoel
                 .and()
