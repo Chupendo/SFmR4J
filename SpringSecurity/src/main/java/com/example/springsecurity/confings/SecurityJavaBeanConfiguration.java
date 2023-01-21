@@ -24,6 +24,8 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityJavaBeanConfiguration  {
 
+    /**
+    //Autehticacion de usuarios/roles en memoria, reemplazado por el serivcio UserDetailService
     @Bean
     protected InMemoryUserDetailsManager configAuthentication() {
         //Create user and role
@@ -48,6 +50,8 @@ public class SecurityJavaBeanConfiguration  {
 
         return new InMemoryUserDetailsManager(users);
     }
+    */
+
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

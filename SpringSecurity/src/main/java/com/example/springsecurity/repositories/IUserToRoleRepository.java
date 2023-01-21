@@ -13,4 +13,7 @@ public interface IUserToRoleRepository extends JpaRepository<UserToRole,Long> {
 
     @Query("SELECT u.user from UserToRole u WHERE u.role.name=?1")
     public List<User> findUserByRoleName(String roleName);
+
+    //@Query("SELECT u FROM UserToRole u WHERE u.user = ?1")
+    List<UserToRole> findByUser(User user);
 }
