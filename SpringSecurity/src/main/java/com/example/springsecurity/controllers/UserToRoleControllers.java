@@ -1,4 +1,4 @@
-package com.example.springsecurity.confings;
+package com.example.springsecurity.controllers;
 
 import com.example.springsecurity.entities.UserToRole;
 import com.example.springsecurity.servicies.usertorole.UserToRoleService;

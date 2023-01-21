@@ -3,6 +3,7 @@ package com.example.springsecurity.confings;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,12 +31,14 @@ public class SecurityJavaBeanConfiguration  {
         List<UserDetails> users = new ArrayList<>();
         List<GrantedAuthority> adminAuthority = new ArrayList<>();
         adminAuthority.add(new SimpleGrantedAuthority("ADMIN"));
-        UserDetails admin= new User("devs", "{noop}devs", adminAuthority);
+        //UserDetails admin= new User("devs", "{noop}devs", adminAuthority);
+        UserDetails admin= new User("devs", encode().encode("vs"), adminAuthority);
         users.add(admin);
 
         List<GrantedAuthority> employeeAuthority = new ArrayList<>();
         adminAuthority.add(new SimpleGrantedAuthority("EMPLOYEE"));
-        UserDetails employee= new User("ns", "{noop}ns", employeeAuthority);
+        //UserDetails employee= new User("ns", "{noop}ns", employeeAuthority);
+        UserDetails employee= new User("ns", encode().encode("vs"), adminAuthority);
         users.add(employee);
 
         List<GrantedAuthority> managerAuthority = new ArrayList<>();
@@ -50,7 +53,12 @@ public class SecurityJavaBeanConfiguration  {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         //declares which Page(URL) will have What access type
-        http.authorizeRequests()
+        http
+                .csrf().disable()
+                .authorizeRequests()
+
+                .and()
+                .authorizeRequests()
                 .antMatchers("/home").permitAll()
                 .antMatchers("/welcome").authenticated()
                 .antMatchers("/admin").hasAuthority("ADMIN")
@@ -59,10 +67,24 @@ public class SecurityJavaBeanConfiguration  {
                 .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
                 .antMatchers("/roles/**").hasAnyAuthority("EMPLOYEE","MANAGER")
 
+                //Habilitamos peitonces/respusta de h2-consoel
+                .and()
+                .authorizeRequests().antMatchers("/h2-console/**").permitAll()
+                .and()
+                .headers().frameOptions().disable()
+
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers(HttpMethod.POST,"/user").hasAnyAuthority("EMPLOYEE","MANAGER")
+                .antMatchers(HttpMethod.PUT).permitAll()
+                .antMatchers(HttpMethod.DELETE).permitAll()
+
                 // Any other URLs which are not configured in above antMatchers
                 // generally declared aunthenticated() in real time
-                .anyRequest().authenticated()
-
+                //.anyRequest().authenticated()
+                .anyRequest().hasAuthority("MANAGER")
                 // Login Form Details
                 .and()
                 .formLogin()
@@ -77,6 +99,10 @@ public class SecurityJavaBeanConfiguration  {
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/accessDenied")
+
+                .and()
+                .httpBasic();
+
         ;
         return http.build();
     }

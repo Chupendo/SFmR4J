@@ -10,13 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class RoleBeanConfing implements ApplicationRunner {
+public class RoleCreated  {
 
-    @Autowired
-    IRoleRepository repo;
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public static List<Role> getLRoles() {
         List<Role> lRole = new ArrayList<>();
 
         lRole.add(new Role(1L,"user"));
@@ -24,6 +20,6 @@ public class RoleBeanConfing implements ApplicationRunner {
         lRole.add(new Role(3L,"admin"));
         lRole.add(new Role(4L,"super"));
 
-        repo.saveAll(lRole);
+        return lRole;
     }
 }
