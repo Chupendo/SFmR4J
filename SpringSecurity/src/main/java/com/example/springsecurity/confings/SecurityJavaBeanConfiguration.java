@@ -85,6 +85,7 @@ public class SecurityJavaBeanConfiguration  {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers(HttpMethod.POST).permitAll()
                 .antMatchers(HttpMethod.POST,"/user/**").hasAnyAuthority("ROLE_EMPLOYEE","ROLE_MANAGER","MANAGER")
                 .antMatchers(HttpMethod.PUT).permitAll()
                 .antMatchers(HttpMethod.DELETE).permitAll()

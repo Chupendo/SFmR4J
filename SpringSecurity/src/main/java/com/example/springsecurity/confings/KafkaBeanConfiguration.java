@@ -1,13 +1,13 @@
 package com.example.springsecurity.confings;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,4 +51,31 @@ public class KafkaBeanConfiguration {
     /**
      * Producer
      */
+    private Map<String, Object> producerProps(){
+        Map<String,Object> props = new HashMap<>();
+
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092");
+        props.put(ProducerConfig.RETRIES_CONFIG,0); //Numero de reintentos
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG,16384); //Tamo de los mensajes
+        props.put(ProducerConfig.LINGER_MS_CONFIG,1); //Tiempo a enviar cada bath
+
+        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG,333554432);//numero de baths
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerDeserializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+
+        return props;
+    }
+
+    @Bean
+    public KafkaTemplate<Integer, String> createTemlate(){
+        Map<String, Object> senderProps = producerProps();
+
+        ProducerFactory<Integer,String> pf = new
+                DefaultKafkaProducerFactory<Integer,String>(senderProps);
+
+        KafkaTemplate<Integer,String> template = new
+                KafkaTemplate<>(pf);
+
+        return template;
+    }
 }

@@ -3,8 +3,13 @@ package com.example.springsecurity.servicies.roles;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.springsecurity.entities.AuditDetails;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,7 +21,11 @@ public class RoleServicie implements IRoleService{
 
 	@Autowired
 	IRoleRepository repo;
-	
+
+	@Autowired
+	private KafkaTemplate<Integer,String> kafkaTemplate;
+
+	private ObjectMapper mapper = new ObjectMapper();
 	@Override
 	public List<Role> getAllRole(String contain) {
 		List<Role> result = repo.findAll();
@@ -86,5 +95,24 @@ public class RoleServicie implements IRoleService{
 		
 		return repo.existsById(roleToDelete.getId());
 	}
-		
+
+
+	//Mehtod used with Kafka
+	public Role createRoleKafka(Role rle){
+		Role roleCRole = repo.save(rle);
+
+
+		AuditDetails detials = new AuditDetails(
+				SecurityContextHolder.getContext().getAuthentication().getName(),
+				roleCRole.getName()
+		);
+
+		try {
+			//Se envia como JSON el detials
+			kafkaTemplate.send("devs4j-topic", mapper.writeValueAsString(detials));
+		} catch (JsonProcessingException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Error parsing the message");
+		}
+		return roleCRole;
+	}
 }

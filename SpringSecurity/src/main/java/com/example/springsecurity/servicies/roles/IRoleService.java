@@ -11,11 +11,11 @@ public interface IRoleService {
 	Role getRolleById(Integer id);
 	
 	Role createRole(Role role);
-	
+	Role createRoleKafka (Role role);
 	Role updateRoleById(long id,Role roleNew);
 	Role updateRoleByName(String nameOld, Role roleNew);
-	
-	
+
+
 	boolean deleteRoleById(long l);
 	boolean deleteRoleByName(String name);
 		

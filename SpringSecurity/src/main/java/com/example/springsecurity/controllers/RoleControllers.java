@@ -72,4 +72,9 @@ public class RoleControllers {
 			rs.deleteRoleByName(param);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+	@PostMapping("/kafka")
+	public ResponseEntity<Role> addRoleKafa(@RequestBody Role role){
+		return new ResponseEntity<Role>(rs.createRoleKafka(role),HttpStatus.OK);
+	}
 }
