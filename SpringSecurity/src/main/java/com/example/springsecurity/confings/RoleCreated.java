@@ -15,10 +15,10 @@ public class RoleCreated  {
     public static List<Role> getLRoles() {
         List<Role> lRole = new ArrayList<>();
 
-        lRole.add(new Role(1L,"user"));
-        lRole.add(new Role(2L,"dev"));
-        lRole.add(new Role(3L,"admin"));
-        lRole.add(new Role(4L,"super"));
+        lRole.add(new Role(1L,"USERS"));
+        lRole.add(new Role(2L,"DEVS"));
+        lRole.add(new Role(3L,"EMPLOYEE"));
+        lRole.add(new Role(4L,"MANAGER"));
 
         return lRole;
     }

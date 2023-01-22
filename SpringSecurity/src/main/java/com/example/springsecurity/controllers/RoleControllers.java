@@ -5,9 +5,13 @@ import java.util.List;
 import com.example.springsecurity.entities.User;
 import com.example.springsecurity.repositories.IUserToRoleRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +28,8 @@ import com.example.springsecurity.servicies.roles.IRoleService;
 @RequestMapping("/roles")
 public class RoleControllers {
 
+	private static final String TAG = "RoleControllers";
+	private static final Logger log = LoggerFactory.getLogger(TAG);
 	@Autowired
 	IRoleService rs;
 
@@ -32,6 +38,14 @@ public class RoleControllers {
 
 	@GetMapping
 	public ResponseEntity<List<Role>> getAllRoles(@RequestParam(value="contain",required = false) String contain){
+		//get data who authenticated
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		log.info("Name {}",authentication.getName());
+		log.info("Principal {}",authentication.getPrincipal());
+		log.info("Credentials {}",authentication.getCredentials());
+		log.info("Details {}",authentication.getDetails());
+		log.info("Authorities or Roles {}",authentication.getAuthorities().toString());
+
 		return new ResponseEntity<List<Role>>(rs.getAllRole(contain),HttpStatus.OK);
 	}
 

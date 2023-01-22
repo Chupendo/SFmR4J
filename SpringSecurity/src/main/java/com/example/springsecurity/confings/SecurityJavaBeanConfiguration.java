@@ -4,6 +4,7 @@ package com.example.springsecurity.confings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityJavaBeanConfiguration  {
 
     /**
@@ -69,7 +71,7 @@ public class SecurityJavaBeanConfiguration  {
                 .antMatchers("/emp").hasAuthority("EMPLOYEE")
                 .antMatchers("/mgr").hasAuthority("MANAGER")
                 .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
-                .antMatchers("/roles/**").hasAnyAuthority("MANAGER")
+                .antMatchers("/roles/**").hasAuthority("ROLE_MANAGER")
 
                 //Habilitamos peitonces/respusta de h2-consoel
                 .and()
@@ -81,14 +83,14 @@ public class SecurityJavaBeanConfiguration  {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers(HttpMethod.GET).permitAll()
-                .antMatchers(HttpMethod.POST,"/user").hasAnyAuthority("EMPLOYEE","MANAGER")
+                .antMatchers(HttpMethod.POST,"/user/**").hasAnyAuthority("ROLE_EMPLOYEE","ROLE_MANAGER","MANAGER")
                 .antMatchers(HttpMethod.PUT).permitAll()
                 .antMatchers(HttpMethod.DELETE).permitAll()
 
                 // Any other URLs which are not configured in above antMatchers
                 // generally declared aunthenticated() in real time
                 //.anyRequest().authenticated()
-                .anyRequest().hasAuthority("MANAGER")
+                .anyRequest().hasAuthority("ROLE_MANAGER")
                 // Login Form Details
                 .and()
                 .formLogin()

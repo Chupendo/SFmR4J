@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -28,6 +29,7 @@ public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
 
+    @Secured("ROLE_MANAGER")
     public List<User> getUsers(String startWith){
         List<User> lUsers = uRepo.findAll();
         if(lUsers ==null|| lUsers.isEmpty())

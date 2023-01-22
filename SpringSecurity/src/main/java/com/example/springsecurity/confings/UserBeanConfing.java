@@ -48,9 +48,9 @@ public class UserBeanConfing implements ApplicationRunner {
         for (int i = 0; i < 10000; i++) {
             try {
                 User user = new User();
-                user.setUserName(faker.name().name());
+                user.setUserName("andres"+i);//faker.name().name());
                 user.setUserNick(faker.dragonBall().character());
-                user.setPassword(faker.funnyName().name());
+                user.setPassword("123");//faker.funnyName().name());
 
                 user = uRepo.save(user);
 

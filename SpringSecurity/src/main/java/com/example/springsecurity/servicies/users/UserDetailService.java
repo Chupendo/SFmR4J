@@ -4,6 +4,8 @@ import com.example.springsecurity.entities.User;
 import com.example.springsecurity.entities.UserToRole;
 import com.example.springsecurity.repositories.IUserRepository;
 import com.example.springsecurity.repositories.IUserToRoleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +18,8 @@ import java.util.Optional;
 
 @Service
 public class UserDetailService implements UserDetailsService {
-
+    private static final String TAG = "UserDetailService";
+    private static final Logger log = LoggerFactory.getLogger(TAG);
     @Autowired
     private IUserRepository uRepo;
 
@@ -34,6 +37,9 @@ public class UserDetailService implements UserDetailsService {
             List<UserToRole> roles = utrRepo.findByUser(user);
 
             String role[] = roles.stream().map(r->r.getRole().getName()).toArray(String[]::new);
+            for (String r:role) {
+                log.info("roles {}"+r);
+            }
 
             return org.springframework.security.core.userdetails.User.withUsername(user.getUserName())
                     //.password(passwordEncoder().encode(user.getPassword()))
