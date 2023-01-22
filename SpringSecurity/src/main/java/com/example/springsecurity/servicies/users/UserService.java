@@ -1,5 +1,6 @@
 package com.example.springsecurity.servicies.users;
 
+import com.example.springsecurity.annotations.IsUserOrAdmin;
 import com.example.springsecurity.entities.User;
 import com.example.springsecurity.repositories.IUserRepository;
 
@@ -34,8 +35,9 @@ public class UserService {
 
     //@Secured("ROLE_MANAGER")
     //@RolesAllowed({"ROLE_MANAGER"})
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER')")
-    @PostAuthorize("hasRole('ROLE_MANAGER')")
+    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER')")
+    //@PostAuthorize("hasRole('ROLE_MANAGER')")
+    @IsUserOrAdmin
     public List<User> getUsers(String startWith){
         List<User> lUsers = uRepo.findAll();
         if(lUsers ==null|| lUsers.isEmpty())
