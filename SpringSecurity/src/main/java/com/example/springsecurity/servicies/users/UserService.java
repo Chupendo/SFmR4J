@@ -18,6 +18,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,8 @@ public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
 
-    @Secured("ROLE_MANAGER")
+    //@Secured("ROLE_MANAGER")
+    @RolesAllowed({"ROLE_MANAGER"})
     public List<User> getUsers(String startWith){
         List<User> lUsers = uRepo.findAll();
         if(lUsers ==null|| lUsers.isEmpty())
