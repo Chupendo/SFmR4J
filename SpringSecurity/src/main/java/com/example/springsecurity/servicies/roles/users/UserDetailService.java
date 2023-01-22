@@ -1,4 +1,4 @@
-package com.example.springsecurity.servicies.users;
+package com.example.springsecurity.servicies.roles.users;
 
 import com.example.springsecurity.entities.User;
 import com.example.springsecurity.entities.UserToRole;

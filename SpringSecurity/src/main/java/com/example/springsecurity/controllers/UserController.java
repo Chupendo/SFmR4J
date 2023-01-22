@@ -1,7 +1,7 @@
 package com.example.springsecurity.controllers;
 
 import com.example.springsecurity.entities.User;
-import com.example.springsecurity.servicies.users.UserService;
+import com.example.springsecurity.servicies.roles.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.example.springsecurity.servicies.users;
+package com.example.springsecurity.servicies.roles.users;
 
 import com.example.springsecurity.annotations.IsUserOrAdmin;
 import com.example.springsecurity.entities.User;
@@ -15,13 +15,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
