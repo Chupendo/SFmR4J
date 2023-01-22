@@ -24,7 +24,8 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(securedEnabled = true)
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
+//@EnableGlobalMethodSecurity(jsr250Enabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityJavaBeanConfiguration  {
 
     /**
